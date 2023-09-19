@@ -1,45 +1,48 @@
- My game is about a bicycle rider in a jungle.
+# JUNGLE GAME
 
- 
+This game is developed by Yildiz Unlu as Ironhack Module-1 Project.You can play this game
+via [this link](https://yildizzor.github.io/jungle_game/).
 
-Player
+## Game Rules
 
-=====
+Player should finish the ride in the jungle within 2 minutes without loosing entire health.
 
- 
+### Main Rules
 
-Rider has initially 100 % health.
+- Bicycle rider repesents "Player" in the game.
 
- 
+- Player has initially 100% health.
 
-Obstacles
+- Player health can't exeed 100% health.
 
-========
+- Game is over when player's health get 0% within 2 minutes.
 
- 
+- Player wins the game if player stays live within 2 minutes.
 
-There will be obstacles on the road and wild animals on the trees, which rider should avoid. And if rider crashed on those, rider loses health percentage. For example if they are wild animals, rider loses 10 percentage and if there are obstacles on the road, rider loses 5 percentage.
+- There will be fruits on the trees.
 
- 
+- There will be obstacles on the road.
 
-Collision on Obstacles
+- There will be wild animals on the trees.
 
-==================
+### Gaining health
 
-Rider can avoid from obstacles on the rode by jumping with bycycle. And rider is bending down to avoid animals.
+Player can gain health percentage by performing following actions:
 
- 
+- Gain 5 percentage health by catching appels.
 
-Fruits
+- Gain 10 percentage health by catching bananas.
 
-=====
+### Loising Health
 
-There will be also fruits on the trees and if rider can pick one of them, rider will gain different health percentages, like picking up an apple will heal the rider with 5 percent health.
+Player loses health percentage with the following situations.
 
- 
+- Lose 15 percentage health by obstacles collisions.
 
-Win case
+- Lose 25 percentage health by animal bites.
 
-=======
+### Avoiding Health Loses
 
-If rider can ride in 2 minutes without loosing 100% health, rider will win the game.
+- Player avoids from obstacles on the rode by jumping with bicycle.
+
+- Player is bending down to avoid wild animals.
