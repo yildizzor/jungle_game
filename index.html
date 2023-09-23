@@ -7,33 +7,42 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
-    <div id="game-intro-screen">
-      <button id="start-button">START</button>
-      <p><span class="explanation">Use the down and up arrow to control the car!</span></p>
-      <img src="YYYYYYYYYYYYYY" alt="Start button" class="start" />
+    <div id="game-intro-screen" class="start-screen game-text">
+      <button id="start-button" class="start-button">START</button>
+      <br />
+      <p>
+        <span class="explanation"
+          >Use the down and up arrow to control the bicycle rider!</span
+        >
+      </p>
     </div>
-
-  
 
     <div id="game-screen">
       <div id="game-container">
-        <h2>Score</h2>
-        <p>Time: <span id="score">0</span></p>
-        <p>Health: <span id="health">100</span>%</p>
+        <div id="scoreboard" class="scoreboard">
+            <h2>Stats</h2>
+            <p>Counter: <span id="minutes">02</span>:<span id="seconds">00</span></span></p>
+            <p>Score:   <span id="score"></span></p>
+            <p>Lives:   <span id="lives">3</span></p>
+        </div>
       </div>
     </div>
 
-    <div id="game-end-screen">
-      <img src="./YYYYYYYYYY" alt="" class="YYYYYYYYYY" />
-      <h1>Game Over</h1>
+    <div id="game-end-screen" class="start-screen game-text end-game-text">
+      <h1 id="game-result">Game Over</h1>
       <br />
-      <button id="restart-button">Restart</button>
+      <h2 class="end-game-score">Final Stats</h2>
+      <p class="end-game-score">Score: <span id="final-score"></span></p>
+      <p class="end-game-score">Lives: <span id="remaining-lives">3</span></p>
+      <br />
+      <button id="restart-button" class="start-button">Restart</button>
     </div>
-  </main>
-  <script type="text/javascript" src="./js/component.js"></script>
-  <script type="text/javascript" src="./js/rider.js"></script>
-  <script type="text/javascript" src="./js/obstacle.js"></script>
-  <script type="text/javascript" src="./js/game.js"></script>
-  <script type="text/javascript" src="./js/script.js"></script>
+
+    <script type="text/javascript" src="./js/component.js"></script>
+    <script type="text/javascript" src="./js/obstacle.js"></script>
+    <script type="text/javascript" src="./js/splash.js"></script>
+    <script type="text/javascript" src="./js/rider.js"></script>
+    <script type="text/javascript" src="./js/game.js"></script>
+    <script type="text/javascript" src="./js/script.js"></script>
   </body>
 </html>
