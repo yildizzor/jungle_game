@@ -7,6 +7,7 @@ via [this link](https://yildizzor.github.io/jungle_game/).
 
 Player should finish the ride in the jungle within 2 minutes without loosing entire health.
 
+
 ### Main Rules
 
 - Bicycle rider repesents "Player" in the game.
