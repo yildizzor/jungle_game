@@ -1,82 +1,19 @@
-body {
-  height: 100%;
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
-#game-intro-screen {
-  background-image: url(../images/Forest_2.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#start-button {
-  background-color: rgb(0, 30, 255);
-  color: white;
-  border: 10px;
-  border-radius: 30px;
-  padding: 20px 20px;
-  text-align: center;
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
-  font-size: 50px;
-  font-weight: bold;
-  box-shadow: 0 9px #999;
-}
-
-#start-button:hover {
-  background-color: #0e1cb4;
-}
-
-#start-button:active {
-  background-color: #0e1cb4;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-.explanation {
-  font-size: 35px;
-  color: black;
-  font-weight: bold;
-}
-
-#game-screen {
-  background-image: url(../images/Forest_1.jpeg);
-  background-repeat: repeat-x;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
+#canvas1 {
+  border: 5px solid black;
   position: absolute;
-  animation: slide 600s linear infinite;
-  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
 }
 
-@keyframes slide {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -100000px 0;
-  }
-}
-
-#game-container {
-
-    font-size: 20px;
-    color: beige;
-    text-align: right;
-    padding-right: 50px;
-    font-style: italic ;
-
-
-
-}
-#game-end-screen {
+#player #layer #enemy_splash #enemy_shit {
   display: none;
 }
