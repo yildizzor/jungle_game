@@ -1,14 +1,14 @@
 window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
-  canvas.width = 1200;
+  canvas.width = 1440;
   canvas.height = 800;
 
   class Game {
     constructor(width, height) {
       this.width = width;
       this.height = height;
-      this.groundMargin = 80;
+      this.groundMargin = 120;
       this.speed = 3;
       this.maxSpeed = 4;
       this.background = new Background(this);
@@ -25,33 +25,29 @@ window.addEventListener("load", function () {
       //Handle Enemies
       if (this.enemyTimer > this.enemyInterval) {
         this.addEnemy();
-        this.enemyTimer() = 0; 
-
+        this.enemyTimer = 0;
       } else {
         this.enemyTimer += deltaTime;
       }
 
-      this.enemies.forEach(enemy => {
-       enemy.update(deltaTime);
-       if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1);
-      })
+      this.enemies.forEach((enemy) => {
+        enemy.update(deltaTime);
+        if (enemy.markedForDeletion)
+          this.enemies = this.enemies.filter(e => e != enemy)
+      });
     }
 
     draw(context) {
       this.background.draw(context);
       this.player.draw(context);
-      this.enemies.forEach(enemy => {
-
+      this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
-
-
     }
 
     addEnemy() {
-      if (this.speed > 0 && Math.random() < 0.5) this.enemies.push(new GroundEnemy(this));
-      else if (this.speed > 0) this.enemies.push (new ClimbingEnemy(this));
-      this.enemies.push(new FlyingEnemy(this));
+      if (this.speed > 0 && Math.random() < 0.5)
+        this.enemies.push(new GroundEnemy(this));
     }
   }
 
@@ -70,5 +66,5 @@ window.addEventListener("load", function () {
     requestAnimationFrame(animate);
   }
 
-  animate();
+  animate(0);
 });
