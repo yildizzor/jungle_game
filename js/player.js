@@ -10,7 +10,7 @@ class Player {
     this.image = document.getElementById("player");
     this.frameX = 0;
     this.frameY = 0;
-    this.maxFrame = 5;
+    this.maxFrame = 16;
     this.fps = 20;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
@@ -48,12 +48,12 @@ class Player {
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
 
-    if (this.frameX < this.maxFrame) this.frameX++;
-    else this.frameX = 0;
-  } else {
-    this.frameTimer += deltaTime;
-  }}
-  
+      if (this.frameX < this.maxFrame) this.frameX++;
+      else this.frameX = 0;
+    } else {
+      this.frameTimer += deltaTime;
+    }
+  }
 
   draw(context) {
     context.drawImage(
@@ -70,13 +70,12 @@ class Player {
   }
 
   onGround() {
-    return this.y >= this.game.height - this.height  - this.game.groundMargin;
+    return this.y >= this.game.height - this.height - this.game.groundMargin;
   }
 
   setState(state, speed) {
     this.currentStates = this.states[state];
-    this.game.speed = this.game.maxSpeed * speed; 
+    this.game.speed = this.game.maxSpeed * speed;
     this.currentStates.enter();
   }
-
 }

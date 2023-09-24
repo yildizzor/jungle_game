@@ -19,7 +19,7 @@ class Sitting extends State {
 
   enter() {
     this.player.frameX = 0;
-    this.player.maxFrame = 4;
+    this.player.maxFrame = 16;
     this.player.frameY = 0;
   }
 
@@ -38,7 +38,7 @@ class Running extends State {
 
   enter() {
     this.player.frameX = 0;
-    this.player.maxFrame = 6;
+    this.player.maxFrame = 16;
     this.player.frameY = 0;
   }
 
@@ -60,7 +60,7 @@ class Jumping extends State {
   enter() {
     if (this.player.onGround()) this.player.vy -= 27;
     this.player.frameX = 0;
-    this.player.maxFrame = 6;
+    this.player.maxFrame = 0;
     this.player.frameY = 0;
   }
 
@@ -79,7 +79,7 @@ class Falling extends State {
 
   enter() {
     this.player.frameX = 0;
-    this.player.maxFrame = 6;
+    this.player.maxFrame = 16;
     this.player.frameY = 0;
   }
 

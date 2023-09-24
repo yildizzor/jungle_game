@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+body {
+  background-color: #1b741b;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 #canvas1 {
   border: 5px solid black;
   position: absolute;
@@ -14,6 +20,9 @@
   max-height: 100%;
 }
 
-#player #layer #enemy_splash #enemy_shit {
+#player,
+#layer,
+#enemy_splash,
+#enemy_shit {
   display: none;
 }

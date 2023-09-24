@@ -16,40 +16,42 @@ class Layer {
 
   draw(context) {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
-    context.drawImage(this.image, this.x, this.width, this.y, this.width, this.height);
+    context.drawImage(
+      this.image,
+      this.x + this.width,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 }
 
 class Background {
   constructor(game) {
     this.game = game;
-    this.width = 1667;
-    this.height = 500;
+    this.width = this.game.width;
+    this.height = this.game.height;
     this.layerimages = document.getElementById("layer");
     this.layer1 = new Layer(
       this.game,
       this.width,
       this.height,
-      4,
+      2,
       this.layerimages
     );
-    console.log(layer1);
+
     this.backgroundLayers = [this.layer1];
   }
 
-  update(){
-
-    this.backgroundLayers.forEach(layer => {
-
-        layer.update
-    })
+  update() {
+    this.backgroundLayers.forEach((layer) => {
+      layer.update();
+    });
   }
 
-  draw(context){
-
-    this.backgroundLayers.forEach(layer => {
-
-        layer.update(context); 
-    })
+  draw(context) {
+    this.backgroundLayers.forEach((layer) => {
+      layer.draw(context);
+    });
   }
 }
