@@ -10,7 +10,7 @@ class Enemy {
 
   update(deltaTime) {
     // movement
-    this.x -= this.speedX + this.game.speed * 2;  // TODO: this.game.speed should multiply with speedModifier like as Background images to stay
+    this.x -= this.speedX + this.game.speed * 2; // TODO: this.game.speed should multiply with speedModifier like as Background images to stay
     this.y += this.speedY;
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
@@ -25,6 +25,8 @@ class Enemy {
   }
 
   draw(context) {
+    if (this.game.debug)
+      context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frameX * this.width,

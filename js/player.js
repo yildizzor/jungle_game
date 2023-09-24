@@ -18,17 +18,18 @@ class Player {
     this.speed = 0;
     this.maxSpeed = 10;
     this.states = [
-      new Sitting(this),
-      new Running(this),
-      new Jumping(this),
-      new Falling(this),
+      new Sitting(this.game),
+      new Running(this.game),
+      new Jumping(this.game),
+      new Falling(this.game),
+      new Hitting(this.game),
     ];
-    this.currentStates = this.states[0];
-    this.currentStates.enter();
+    
   }
 
   update(input, deltaTime) {
-    this.currentStates.handleInput(input);
+    this.checkCollision();
+    this.game.currentState.handleInput(input);
     //horizontal movement
     this.x += this.speed;
     if (input.includes("ArrowRight")) this.speed = this.maxSpeed;
@@ -56,6 +57,8 @@ class Player {
   }
 
   draw(context) {
+    if (this.game.debug)
+      context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frameX * this.width,
@@ -74,8 +77,26 @@ class Player {
   }
 
   setState(state, speed) {
-    this.currentStates = this.states[state];
+    this.game.currentState = this.states[state];
     this.game.speed = this.game.maxSpeed * speed;
-    this.currentStates.enter();
+    this.game.currentState.enter();
+  }
+
+  checkCollision() {
+    // colision detected
+    this.game.enemies.forEach((enemy) => {
+      if (
+        enemy.x < this.x + this.width &&
+        enemy.x + enemy.width > this.x &&
+        enemy.y < this.y + this.height &&
+        enemy.y + enemy.height > this.y
+      ) {
+        enemy.markedForDeletion = true;
+        this.game.score += 10;
+      } else {
+
+        // no collision
+      }
+    });
   }
 }

@@ -13,10 +13,16 @@ window.addEventListener("load", function () {
       this.maxSpeed = 4;
       this.background = new Background(this);
       this.player = new Player(this);
-      this.input = new InputHandler();
+      this.input = new InputHandler(this);
+      this.UI = new UI(this);
       this.enemies = [];
       this.enemyTimer = 0;
       this.enemyInterval = 1000;
+      this.debug = true;
+      this.score = 0;
+      this.fontColor = "white";
+      this.currentState = this.player.states[0];
+      this.currentState.enter();
     }
 
     update(deltaTime) {
@@ -33,7 +39,7 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.update(deltaTime);
         if (enemy.markedForDeletion)
-          this.enemies = this.enemies.filter(e => e != enemy)
+          this.enemies = this.enemies.filter((e) => e != enemy);
       });
     }
 
@@ -43,16 +49,20 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
+
+      this.UI.draw(context);
     }
 
     addEnemy() {
-      if (this.speed > 0 && Math.random() < 0.5)
+      if (this.speed > 0 && Math.random() < 0.5) {
         this.enemies.push(new GroundEnemy(this));
+      } else if (this.speed > 0 && Math.random() < 0.98) {
+        this.enemies.push(new FlyingEnemy(this));
+      }
     }
   }
 
   const game = new Game(canvas.width, canvas.height);
-  console.log(game);
 
   let lastTime = 0;
 
