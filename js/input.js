@@ -1,33 +1,34 @@
 class InputHandler {
   constructor(game) {
     this.game = game;
+    this.jumpingAudio = document.getElementById("jumping-sound");
     this.keys = [];
     window.addEventListener("keydown", (e) => {
       if (
-        (e.key === "ArrowDown" ||
-          e.key === "ArrowUp" ||
-          e.key === "ArrowLeft" ||
-          e.key === "ArrowRight" ||
-          e.key === "Enter") &&
+        (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter") &&
         this.keys.indexOf(e.key) === -1
       ) {
         this.keys.push(e.key);
-      } else if(e.key === "d") this.game.debug = !this.game.debug;
-     
+        if (e.key === "ArrowUp" && this.game.player.onGround()) {
+          this.jumpingAudio.play();
+        }
+      } else if (e.key === "d") this.game.debug = !this.game.debug;
     });
 
     window.addEventListener("keyup", (e) => {
-      if (
-        e.key === "ArrowDown" ||
-        e.key === "ArrowUp" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight" ||
-        e.key === "Enter"
-      ) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter") {
         this.keys.splice(this.keys.indexOf(e.key), 1);
       }
-
-      console.log(e.key, this.keys);
     });
+  }
+
+  isJumping() {
+    return this.keys.includes("ArrowUp");
+  }
+
+  play() {
+    if (this.isJumping() && this.game.player.onGround()) {
+      this.jumpingAudio.play();
+    }
   }
 }

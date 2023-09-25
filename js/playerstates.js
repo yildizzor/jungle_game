@@ -1,33 +1,24 @@
 const states = {
-  SITTING: 0,
-  RUNNING: 1,
-  JUMPING: 2,
-  FALLING: 3, 
-  HIT: 4, 
+  RUNNING: 0,
+  JUMPING: 1,
+  FALLING: 2,
+  HIT: 3,
 };
 
 class State {
   constructor(state, game) {
     this.state = state;
-    this.game = game; 
-  }
-}
-
-class Sitting extends State {
-  constructor(game) {
-    super("SITTING", game);
-   
+    this.game = game;
+    this.audio;
   }
 
-  enter() {
-    this.game.player.frameX = 0;
-    this.game.player.maxFrame = 16;
-    this.game.player.frameY = 0;
+  isGamePaused() {
+    return false;
   }
 
-  handleInput(input) {
-    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) {
-      this.game.player.setState(states.RUNNING, 1);
+  play() {
+    if (this.audio) {
+      this.audio.play();
     }
   }
 }
@@ -44,9 +35,7 @@ class Running extends State {
   }
 
   handleInput(input) {
-    if (input.includes("ArrowLeft")) {
-      this.game.player.setState(states.SITTING, 0);
-    } else if (input.includes("ArrowUp")) {
+    if (input.isJumping()) {
       this.game.player.setState(states.JUMPING, 1);
     }
   }
@@ -55,7 +44,6 @@ class Running extends State {
 class Jumping extends State {
   constructor(game) {
     super("JUMPING", game);
-    this.game.player = player;
   }
 
   enter() {
@@ -66,7 +54,7 @@ class Jumping extends State {
   }
 
   handleInput(input) {
-    if (this.game.player.vy > this.game.player.weight) {
+    if (this.game.player.vy > this.game.gravity) {
       this.game.player.setState(states.FALLING, 1);
     }
   }
@@ -79,7 +67,7 @@ class Falling extends State {
 
   enter() {
     this.game.player.frameX = 0;
-    this.game.player.maxFrame = 16;
+    this.game.player.maxFrame = 0;
     this.game.player.frameY = 0;
   }
 
@@ -90,21 +78,35 @@ class Falling extends State {
   }
 }
 
-
 class Hitting extends State {
   constructor(game) {
     super("HITTING", game);
+    this.stateStartTime = null;
+    this.stateElapsedTime = null;
   }
 
   enter() {
+    this.game.player.vy = 0;
     this.game.player.frameX = 0;
-    this.game.player.maxFrame = 16;
+    this.game.player.maxFrame = 0;
     this.game.player.frameY = 0;
   }
 
+  isGamePaused() {
+    return true;
+  }
+
   handleInput(input) {
-    if (this.game.player.onGround()) {
-      this.game.player.setState(states.RUNNING, 1);
+    if (this.stateStartTime === null) {
+      this.stateStartTime = this.game.currentTime;
+    } else {
+      this.stateElapsedTime = this.game.currentTime - this.stateStartTime;
+
+      if (this.stateElapsedTime > 2000) {
+        this.stateStartTime = null;
+        this.game.player.setState(states.RUNNING, 1);
+        this.currentTime = null;
+      }
     }
   }
 }

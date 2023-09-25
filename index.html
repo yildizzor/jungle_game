@@ -7,37 +7,57 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
-    <!-- <div id="game-intro-screen">
-      <button id="start-button">START</button>
-      <p>
-        <span class="explanation"
-          >Use the down and up arrow to control the bicycle rider!</span
-        >
-      </p>
-    </div> -->
-    <canvas id="canvas1"></canvas>
-    <img id="player" src="./images/fietser.png" />
-    <img id="layer" src="./images/background.jpeg" />
-    <img id="enemy_shit" src="./images/obstacle_s.png" />
-    <img id="enemy_splash" src="./images/splash.png" />
+    <div id="container">
+      <div id="game-intro-screen" class="start-screen game-text">
+        <h1>Nederlander in het Bos!</h1>
+        <br />
+        <button id="start-button" class="start-button">START</button>
+        <br />
+        <h4>Use the down and up arrow to control the bicycle rider!</h4>
+      </div>
 
-    <!-- <div id="game-screen">
-      <div id="game-container">
-        <h2>Score</h2>
-        <p>Time: <span id="score">0</span></p>
-        <p>Health: <span id="lives">3</span></p>
-      </div> -->
-    <!-- </div>
-    <div id="game-end-screen">
-      <h1>Game Over</h1>
-      <button id="restart-button">Restart</button>
-    </div> -->
+      <canvas id="game-canvas"></canvas>
+      
+      <img id="player" src="./images/fietser.png" />
+      <img id="layer" src="./images/background.jpeg" />
+      <img id="shit" src="./images/obstacle.png" />
+      <img id="splash" src="./images/splash.png" />
+      <img id="fietser-icon" src="./images/fietser-icon.png" />
+      <img id="apple-warm" src="./images/apple-warm.png" />
+      <img id="banana" src="./images/banana.png" />
+      <audio id="splash-audio">
+        <source src="./audio/shit.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="fruit-sound">
+        <source src="./audio/fruit-sound.wav" type="audio/mpeg">
+      </audio>
+      <audio id="jumping-sound">
+        <source src="./audio/jumping-sound.wav" type="audio/mpeg">
+      </audio>
+      <audio id="monkey-sound">
+        <source src="./audio/monkey-sound.wav" type="audio/mpeg">
+      </audio>
+      <audio id="background-sound" loop>
+        <source src="./audio/background-sound.wav" type="audio/mpeg">
+      </audio>
+      <audio id="game-over-sound">
+        <source src="./audio/game-over.wav" type="audio/mpeg">
+      </audio>
+      <audio id="game-win-sound">
+        <source src="./audio/game-win.wav" type="audio/mpeg">
+      </audio>
+
+      <div id="game-end-screen"">
+        <button id="restart-button" class="start-button">Restart</button>
+      </div>
+    </div>
     <script type="text/javascript" src="./js/player.js"></script>
     <script type="text/javascript" src="./js/background.js"></script>
-    <script type="text/javascript" src="./js/enemies.js"></script>
+    <script type="text/javascript" src="./js/obstacles.js"></script>
     <script type="text/javascript" src="./js/playerstates.js"></script>
     <script type="text/javascript" src="./js/input.js"></script>
-    <script type="text/javascript" src="./js/UI.js"></script>
+    <script type="text/javascript" src="./js/scoreboard.js"></script>
+    <script type="text/javascript" src="./js/game.js"></script> 
     <script type="text/javascript" src="./js/script.js"></script>
   </body>
 </html>

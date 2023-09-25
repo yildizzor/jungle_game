@@ -1,80 +1,44 @@
 window.addEventListener("load", function () {
-  const canvas = document.getElementById("canvas1");
-  const ctx = canvas.getContext("2d");
+  const startButton = document.getElementById("start-button");
+  const restartButton = document.getElementById("restart-button");
+
+  const canvas = document.getElementById("game-canvas");
+  const context = canvas.getContext("2d");
   canvas.width = 1440;
   canvas.height = 800;
-
-  class Game {
-    constructor(width, height) {
-      this.width = width;
-      this.height = height;
-      this.groundMargin = 120;
-      this.speed = 3;
-      this.maxSpeed = 4;
-      this.background = new Background(this);
-      this.player = new Player(this);
-      this.input = new InputHandler(this);
-      this.UI = new UI(this);
-      this.enemies = [];
-      this.enemyTimer = 0;
-      this.enemyInterval = 1000;
-      this.debug = true;
-      this.score = 0;
-      this.fontColor = "white";
-      this.currentState = this.player.states[0];
-      this.currentState.enter();
-    }
-
-    update(deltaTime) {
-      this.background.update();
-      this.player.update(this.input.keys, deltaTime);
-      //Handle Enemies
-      if (this.enemyTimer > this.enemyInterval) {
-        this.addEnemy();
-        this.enemyTimer = 0;
-      } else {
-        this.enemyTimer += deltaTime;
-      }
-
-      this.enemies.forEach((enemy) => {
-        enemy.update(deltaTime);
-        if (enemy.markedForDeletion)
-          this.enemies = this.enemies.filter((e) => e != enemy);
-      });
-    }
-
-    draw(context) {
-      this.background.draw(context);
-      this.player.draw(context);
-      this.enemies.forEach((enemy) => {
-        enemy.draw(context);
-      });
-
-      this.UI.draw(context);
-    }
-
-    addEnemy() {
-      if (this.speed > 0 && Math.random() < 0.5) {
-        this.enemies.push(new GroundEnemy(this));
-      } else if (this.speed > 0 && Math.random() < 0.98) {
-        this.enemies.push(new FlyingEnemy(this));
-      }
-    }
-  }
 
   const game = new Game(canvas.width, canvas.height);
 
   let lastTime = 0;
 
+  // timestamp parameter passed by requestAnimationFrame function behind the scene ()
   function animate(timeStamp) {
-    const deltaTime = timeStamp - lastTime;
+    const elapsedTime = timeStamp - lastTime;
     lastTime = timeStamp;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.update(deltaTime);
-    game.draw(ctx);
-    requestAnimationFrame(animate);
+    // clears the entire previous canvas drawing before starting new drawing
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // Update all the drawings positions,
+    // So, then we can draw all the images according to new positions
+    game.update(elapsedTime);
+    game.draw(context);
+    
+    // Check if game is over
+    if (game.gameOver) {
+      game.end();
+    } else {
+      requestAnimationFrame(animate);
+    }
   }
 
-  animate(0);
+  // When click event happens on Start Button, game will start
+  startButton.addEventListener("click", () => {
+    game.start(context);
+    animate(0);
+  });
+
+  // When click event happens on Restart Button, window is reloaded to start for a new game
+  restartButton.addEventListener("click", function () {
+    location.reload();
+  });
 });

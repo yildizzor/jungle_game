@@ -3,47 +3,40 @@ class Player {
     this.game = game;
     this.width = 250;
     this.height = 250;
-    this.x = 0;
-    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.x = 100; // player's initial x level
+    this.y = this.game.height - this.height - this.game.groundMargin; // player's initial y level
     this.vy = 0;
-    this.weight = 1;
     this.image = document.getElementById("player");
     this.frameX = 0;
     this.frameY = 0;
-    this.maxFrame = 16;
-    this.fps = 20;
+    this.maxFrame = 16; // image consists of 17 frames of sprite sheet
+    this.fps = 60;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
 
-    this.speed = 0;
-    this.maxSpeed = 10;
     this.states = [
-      new Sitting(this.game),
       new Running(this.game),
       new Jumping(this.game),
       new Falling(this.game),
       new Hitting(this.game),
     ];
-    
+
+    this.currentState = null;
   }
 
   update(input, deltaTime) {
     this.checkCollision();
-    this.game.currentState.handleInput(input);
-    //horizontal movement
-    this.x += this.speed;
-    if (input.includes("ArrowRight")) this.speed = this.maxSpeed;
-    else if (input.includes("ArrowLeft")) this.speed = -this.maxSpeed;
-    else this.speed = 0;
-    if (this.x < 0) this.x = 0;
-    if (this.x > this.game.width - this.width)
-      this.x = this.game.width - this.width;
+    this.currentState.handleInput(input);
 
     // vertical movement
-
     this.y += this.vy;
-    if (!this.onGround()) this.vy += this.weight;
-    else this.vy = 0;
+    if (!this.onGround()) {
+      if (!this.currentState.isGamePaused()) {
+        this.vy += this.game.gravity;
+      }
+    } else {
+      this.vy = 0;
+    }
 
     // sprite animation
     if (this.frameTimer > this.frameInterval) {
@@ -77,25 +70,39 @@ class Player {
   }
 
   setState(state, speed) {
-    this.game.currentState = this.states[state];
+    this.currentState = this.states[state];
     this.game.speed = this.game.maxSpeed * speed;
-    this.game.currentState.enter();
+    this.currentState.enter();
   }
 
   checkCollision() {
+    const xOffset = 30;
     // colision detected
-    this.game.enemies.forEach((enemy) => {
+    this.game.obstacles.forEach((obs) => {
       if (
-        enemy.x < this.x + this.width &&
-        enemy.x + enemy.width > this.x &&
-        enemy.y < this.y + this.height &&
-        enemy.y + enemy.height > this.y
+        obs.x < this.x + this.width - xOffset &&
+        obs.x + obs.width > this.x + xOffset &&
+        obs.y < this.y + this.height &&
+        obs.y + obs.height > this.y
       ) {
-        enemy.markedForDeletion = true;
-        this.game.score += 10;
-      } else {
+        if (!obs.markedForDeletion) {
+          obs.play()
+        }
 
-        // no collision
+        obs.markedForDeletion = true;
+
+        if (obs.gainHealth) {
+          this.game.score += obs.points;
+        } else {
+          this.setState(3, 0); // Hitting state
+          this.game.splash.push(new Splash(this.game));
+          this.game.lives -= 1;
+        }
+      } else if (obs.x < 0) {
+        obs.markedForDeletion = true;
+        if (!obs.gainHealth) {
+          this.game.score += obs.points;
+        }
       }
     });
   }

@@ -31,13 +31,17 @@ class Background {
     this.game = game;
     this.width = this.game.width;
     this.height = this.game.height;
-    this.layerimages = document.getElementById("layer");
+
+    this.audio = document.getElementById("background-sound");
+    this.audio.volume = 0.3;
+
+    this.layer1Img = document.getElementById("layer");
     this.layer1 = new Layer(
       this.game,
       this.width,
       this.height,
-      2,
-      this.layerimages
+      1,
+      this.layer1Img
     );
 
     this.backgroundLayers = [this.layer1];
