@@ -5,44 +5,38 @@ via [this link](https://yildizzor.github.io/jungle_game/).
 
 ## Game Rules
 
-Player should finish the ride in the jungle within 2 minutes without loosing entire health.
+Player should finish the ride in the jungle within 2 minutes without losing entire lives.
 
 ### Main Rules
 
 - Bicycle rider repesents "Player" in the game.
 
-- Player has initially 100% health.
+- Player has initially 3 lives.
 
-- Player health can't exeed 100% health.
-
-- Game is over when player's health get 0% within 2 minutes.
+- Game is over when there is no lives left wihtin 2 minutes.
 
 - Player wins the game if player stays live within 2 minutes.
 
-- There will be fruits on the trees.
+- There are fruits on the trees like apples, bananas, etc.
 
-- There will be obstacles on the road.
+- There are obstacles on the road.
 
-- There will be wild animals on the trees.
+- There are wild animals on the trees, like monkeys, snakes, etc.
 
-### Gaining health
+### Scoring
 
-Player can gain health percentage by performing following actions:
+Player can gain points by performing following actions:
 
-- Gain 5 percentage health by catching appels.
+- Gain 20 points score by picking fruits.
 
-- Gain 10 percentage health by catching bananas.
+- Gain 10 points when an obstacle passed entire width of screen without colliding the player.
 
-### Loising Health
+### Losing Lives
 
-Player loses health percentage with the following situations.
+Player loses lives with the following situations.
 
-- Lose 15 percentage health by obstacles collisions.
+- Lose 1 life by obstacle collisions.
 
-- Lose 25 percentage health by animal bites.
-
-### Avoiding Health Loses
+### Avoiding Losing Lives
 
 - Player avoids from obstacles on the rode by jumping with bicycle.
-
-- Player is bending down to avoid wild animals.

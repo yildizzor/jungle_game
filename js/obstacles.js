@@ -1,6 +1,7 @@
 class Component {
   constructor() {
     this.gainHealth = false;
+    this.needsSplashAnimation = false;
     this.points = 10;
     this.frameX = 0;
     this.frameY = 0;
@@ -114,6 +115,22 @@ class ClimbingObstacle extends Component {
   }
 }
 
+class MonkeyObstacle extends Component {
+  constructor(game) {
+    super();
+    this.game = game;
+    this.width = 120;
+    this.height = 151;
+    this.x = this.game.width;
+    this.y = this.randomNumber(100, 120);
+    this.image = document.getElementById("monkey");
+    this.audio = document.getElementById("monkey-sound");
+    this.speedX = 0;
+    this.speedY = 0;
+    this.maxFrame = 0;
+  }
+}
+
 class ShitObstacle extends Component {
   constructor(game) {
     super();
@@ -127,6 +144,7 @@ class ShitObstacle extends Component {
     this.speedX = 0;
     this.speedY = 10;
     this.maxFrame = 0;
+    this.needsSplashAnimation = true
   }
 }
 

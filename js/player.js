@@ -86,7 +86,7 @@ class Player {
         obs.y + obs.height > this.y
       ) {
         if (!obs.markedForDeletion) {
-          obs.play()
+          obs.play();
         }
 
         obs.markedForDeletion = true;
@@ -95,7 +95,9 @@ class Player {
           this.game.score += obs.points;
         } else {
           this.setState(3, 0); // Hitting state
-          this.game.splash.push(new Splash(this.game));
+          if (obs.needsSplashAnimation) {
+            this.game.splash.push(new Splash(this.game));
+          }
           this.game.lives -= 1;
         }
       } else if (obs.x < 0) {

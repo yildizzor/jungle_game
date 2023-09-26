@@ -61,9 +61,9 @@ class Game {
 
     if (Math.random() > 0.8) {
       this.obstacles.push(new ShitObstacle(this));
-    } else if (Math.random() < 0.98) {
-      // this.obstacles.push(new FlyingEnemy(this));
-    }
+    } else if (Math.random() > 0.6) {
+      this.obstacles.push(new MonkeyObstacle(this));
+    } else
 
     if ( Math.random() > 0.5) {
       this.obstacles.push(new Apple(this));
@@ -93,7 +93,7 @@ class Game {
     } else {
       document.getElementById("game-over-sound").play();
     }
-    
+
     document.getElementById("game-end-screen").style.display = "flex";
   }
 }
