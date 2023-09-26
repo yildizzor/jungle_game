@@ -9,25 +9,26 @@ window.addEventListener("load", function () {
 
   const game = new Game(canvas.width, canvas.height);
 
-  let lastTime = 0;
+  let lastTimeStamp = 0;
 
-  // timestamp parameter passed by requestAnimationFrame function behind the scene ()
+  // timestamp parameter passed by requestAnimationFrame function behind the scene
   function animate(timeStamp) {
-    const elapsedTime = timeStamp - lastTime;
-    lastTime = timeStamp;
+    const deltaTime = timeStamp - lastTimeStamp;
+    lastTimeStamp = timeStamp;
 
     // clears the entire previous canvas drawing before starting new drawing
     context.clearRect(0, 0, canvas.width, canvas.height);
+
     // Update all the drawings positions,
     // So, then we can draw all the images according to new positions
-    game.update(elapsedTime);
+    game.update(deltaTime);
     game.draw(context);
-    
+
     // Check if game is over
-    if (game.gameOver) {
+    if (game.gameOver === true) {
       game.end();
     } else {
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animate); // => This is a special function in JS to update the animation onscreen.
     }
   }
 
@@ -38,7 +39,7 @@ window.addEventListener("load", function () {
   });
 
   // When click event happens on Restart Button, window is reloaded to start for a new game
-  restartButton.addEventListener("click", function () {
-    location.reload();
+  restartButton.addEventListener("click", () => {
+    location.reload(); // => This is a special JS function like as window or document...
   });
 });

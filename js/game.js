@@ -4,7 +4,7 @@ class Game {
     this.height = height;
     this.groundMargin = 120;
     this.speed = 6;
-    this.maxSpeed = 6;
+    this.maxSpeed = 6; // => to preserve game speed after collision. ??????????????
     this.gravity = 1;
     this.background = new Background(this);
     this.player = new Player(this);
@@ -13,14 +13,14 @@ class Game {
     this.obstacles = [];
     this.splash = [];
     this.obstacleTimer = 0;
-    this.obstacleInterval = 1500;
+    this.obstacleInterval = 1500; //1.5 second in 1500 milisecond.
     this.debug = false;
     this.score = 0;
     this.lives = 3;
     this.gameOver = false;
     this.currentTime = 0;
-    this.deltaTime = 0; // time elapsed in between each animation frame
-    this.maxTime = 122 * 1000; // 122 seconds
+    this.deltaTime = 0; // deltatime in between each animation frame.
+    this.gameDuration = 122 * 1000; // 2 minutes(The game start 2 seconds late. This is an issue. Workaround!)
 
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
@@ -28,7 +28,10 @@ class Game {
 
   update(deltaTime) {
     this.currentTime += deltaTime;
-    if (this.currentTime > this.maxTime || this.lives < 1) this.gameOver = true;
+    if (this.currentTime > this.gameDuration || this.lives < 1) {
+      this.gameOver = true;
+    }
+
     this.background.update();
     this.player.update(this.input, deltaTime);
 
@@ -40,8 +43,9 @@ class Game {
       this.obstacleTimer += deltaTime;
     }
 
-    this.obstacles.forEach((obs) => obs.update(deltaTime));
+    this.obstacles.forEach((obs) => obs.update(deltaTime)); // => Appel, banana, monkey and shit are included.
     this.obstacles = this.obstacles.filter((obs) => !obs.markedForDeletion);
+
     this.splash.forEach((splash) => splash.update(deltaTime));
     this.splash = this.splash.filter((splash) => !splash.markedForDeletion);
   }
@@ -65,10 +69,13 @@ class Game {
       this.obstacles.push(new MonkeyObstacle(this));
     }
 
-    if ( Math.random() > 0.5) {
+    if (Math.random() > 0.5) {
       this.obstacles.push(new Apple(this));
     } else if (Math.random() > 0.5) {
       this.obstacles.push(new Banana(this));
+      if (Math.random() > 0.7) {
+        this.obstacles.push(new Banana(this));
+      }
     }
   }
 

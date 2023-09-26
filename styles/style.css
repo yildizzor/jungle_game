@@ -4,12 +4,6 @@
   padding: 0;
 }
 
-body {
-  background: url(../images/sunshine-bg.jpeg);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 #container {
   position: relative;
   display: flex;
@@ -80,6 +74,24 @@ body {
   display: none;
 }
 
-img, audio {
+#player,
+#player-bending,
+#layer,
+#shit,
+#splash,
+#fietser-icon,
+#apple-warm,
+#banana,
+#monkey {
+  display: none;
+}
+
+#splash-audio,
+#fruit-sound,
+#jumping-sound,
+#monkey-sound,
+#background-sound,
+#game-over-sound,
+#game-win-sound {
   display: none;
 }

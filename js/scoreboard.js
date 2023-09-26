@@ -72,7 +72,7 @@ class ScoreBoard {
 
   getTime() {
     // Get remaining time and convert it from milliseconds to seconds
-    let timeLeft = (this.game.maxTime - this.game.currentTime) / 1000;
+    let timeLeft = (this.game.gameDuration - this.game.currentTime) / 1000;
     timeLeft = timeLeft >= 0 ? timeLeft : 0;
 
     const minutes = Math.floor(timeLeft / 60);
