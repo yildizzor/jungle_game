@@ -63,7 +63,7 @@ class Game {
       this.obstacles.push(new ShitObstacle(this));
     } else if (Math.random() > 0.6) {
       this.obstacles.push(new MonkeyObstacle(this));
-    } else
+    }
 
     if ( Math.random() > 0.5) {
       this.obstacles.push(new Apple(this));

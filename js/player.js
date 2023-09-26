@@ -5,8 +5,10 @@ class Player {
     this.height = 250;
     this.x = 100; // player's initial x level
     this.y = this.game.height - this.height - this.game.groundMargin; // player's initial y level
+    this.yOffset = 0; // for bending image to draw it on ground
     this.vy = 0;
     this.image = document.getElementById("player");
+    this.tempImage = document.getElementById("player-bending");
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 16; // image consists of 17 frames of sprite sheet
@@ -19,6 +21,7 @@ class Player {
       new Jumping(this.game),
       new Falling(this.game),
       new Hitting(this.game),
+      new Bending(this.game),
     ];
 
     this.currentState = null;
@@ -50,18 +53,24 @@ class Player {
   }
 
   draw(context) {
+    // yOffset is for the bending state
     if (this.game.debug)
-      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.strokeRect(
+        this.x,
+        this.y + this.yOffset,
+        this.width,
+        this.height - this.yOffset
+      );
     context.drawImage(
       this.image,
       this.frameX * this.width,
       this.frameY * this.height,
       this.width,
-      this.height,
+      this.height - this.yOffset,
       this.x,
-      this.y,
+      this.y + this.yOffset,
       this.width,
-      this.height
+      this.height - this.yOffset
     );
   }
 
@@ -70,21 +79,23 @@ class Player {
   }
 
   setState(state, speed) {
+    this.currentState.cleanUp();
     this.currentState = this.states[state];
     this.game.speed = this.game.maxSpeed * speed;
     this.currentState.enter();
   }
 
-  checkCollision() {
+  checkCollision(yOffset) {
     const xOffset = 30;
     // colision detected
     this.game.obstacles.forEach((obs) => {
       if (
         obs.x < this.x + this.width - xOffset &&
         obs.x + obs.width > this.x + xOffset &&
-        obs.y < this.y + this.height &&
-        obs.y + obs.height > this.y
+        obs.y < this.y + this.yOffset + this.height &&
+        obs.y + obs.height > this.y + this.yOffset
       ) {
+        debugger;
         if (!obs.markedForDeletion) {
           obs.play();
         }
@@ -107,5 +118,9 @@ class Player {
         }
       }
     });
+  }
+
+  isBendingState() {
+    return this.currentState.state === "BENDING";
   }
 }

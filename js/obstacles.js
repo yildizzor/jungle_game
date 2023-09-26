@@ -122,7 +122,8 @@ class MonkeyObstacle extends Component {
     this.width = 120;
     this.height = 151;
     this.x = this.game.width;
-    this.y = this.randomNumber(100, 120);
+    //this.y = this.randomNumber(100, 120);
+    this.y = 300;
     this.image = document.getElementById("monkey");
     this.audio = document.getElementById("monkey-sound");
     this.speedX = 0;
