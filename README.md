@@ -1,7 +1,7 @@
 # JUNGLE GAME
 
 This game is developed by Yildiz Unlu as Ironhack Module-1 Project.You can play this game
-via [this link](https://yildizzor.github.io/jungle_game/).
+via [this link](https://yildizzor.github.io/jungle_game/) or via [netlify link](https://junglegamewithrider.netlify.app/).
 
 ## Game Rules
 
@@ -27,9 +27,9 @@ Player should finish the ride in the jungle within 2 minutes without losing enti
 
 Player can gain points by performing following actions:
 
-- Gain 20 points score by picking fruits.
+- Gain 10 points score by picking fruits.
 
-- Gain 10 points when an obstacle passed entire width of screen without colliding the player.
+- Gain 20 points when an obstacle passed entire width of screen without colliding the player.
 
 ### Losing Lives
 

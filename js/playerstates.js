@@ -53,7 +53,6 @@ class Running extends State {
   enter() {
     this.game.player.frameX = 0;
     this.game.player.maxFrame = 16;
-    this.game.player.frameY = 0;
   }
 
   handleInput(input) {
@@ -74,7 +73,6 @@ class Jumping extends State {
     if (this.game.player.onGround()) this.game.player.vy -= 27;
     this.game.player.frameX = 0;
     this.game.player.maxFrame = 0;
-    this.game.player.frameY = 0;
   }
 
   handleInput(input) {
@@ -96,7 +94,6 @@ class Bending extends State {
     this.game.player.tempImage = image;
     this.game.player.frameX = 0;
     this.game.player.maxFrame = 0;
-    this.game.player.frameY = 0;
   }
 
   cleanUp() {
@@ -107,7 +104,7 @@ class Bending extends State {
 }
 
   handleInput(input) {
-    if (this.elapsedTimePassed(1500) || input.isJumping()) {
+    if (!input.isBending()) {
       this.game.player.setState(states.RUNNING, 1);
     }
   }
@@ -121,7 +118,6 @@ class Falling extends State {
   enter() {
     this.game.player.frameX = 0;
     this.game.player.maxFrame = 0;
-    this.game.player.frameY = 0;
   }
 
   handleInput(input) {
@@ -142,7 +138,6 @@ class Hitting extends State {
     this.game.player.vy = 0;
     this.game.player.frameX = 0;
     this.game.player.maxFrame = 0;
-    this.game.player.frameY = 0;
   }
 
   isGamePaused() {

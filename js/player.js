@@ -3,14 +3,13 @@ class Player {
     this.game = game;
     this.width = 250;
     this.height = 250;
-    this.x = 100; // player's initial x level
+    this.x = 100; // player's initial x position
     this.y = this.game.height - this.height - this.game.groundMargin; // player's initial y level
     this.yOffset = 0; // for bending image to draw it on ground
-    this.vy = 0;
+    this.vy = 0; // velocity on y axis for jumping and falling
     this.image = document.getElementById("player");
-    this.tempImage = document.getElementById("player-bending");
+    this.tempImage = document.getElementById("player-bending"); // For bending position, "player-bending" will replaced "player" image
     this.frameX = 0;
-    this.frameY = 0;
     this.maxFrame = 16; // image consists of 17 frames of sprite sheet
     this.fps = 60;
     this.frameInterval = 1000 / this.fps;
@@ -43,28 +42,31 @@ class Player {
 
     // sprite animation
     if (this.frameTimer > this.frameInterval) {
+      // Frame timer should restart
       this.frameTimer = 0;
 
       if (this.frameX < this.maxFrame) this.frameX++;
       else this.frameX = 0;
     } else {
+      // Frame timer is continue
       this.frameTimer += deltaTime;
     }
   }
 
   draw(context) {
-    // yOffset is for the bending state
-    if (this.game.debug)
+    // yOffset is for the bending state, to draw bike more lower position
+    if (this.game.debug) {
       context.strokeRect(
         this.x,
         this.y + this.yOffset,
         this.width,
         this.height - this.yOffset
       );
+    }
     context.drawImage(
       this.image,
       this.frameX * this.width,
-      this.frameY * this.height,
+      0 * this.height,
       this.width,
       this.height - this.yOffset,
       this.x,
@@ -85,17 +87,16 @@ class Player {
     this.currentState.enter();
   }
 
-  checkCollision(yOffset) {
+  checkCollision() {
     const xOffset = 30;
     // colision detected
     this.game.obstacles.forEach((obs) => {
       if (
-        obs.x < this.x + this.width - xOffset &&
-        obs.x + obs.width > this.x + xOffset &&
-        obs.y < this.y + this.yOffset + this.height &&
-        obs.y + obs.height > this.y + this.yOffset
+        obs.x < this.x + this.width - obs.xForwardOffset &&
+        obs.x + obs.width > this.x + obs.xBackwardOffset &&
+        obs.y < this.y + this.yOffset + this.height - obs.yUpOffset &&
+        obs.y + obs.height > this.y + this.yOffset + obs.yUpOffset
       ) {
-        debugger;
         if (!obs.markedForDeletion) {
           obs.play();
         }
