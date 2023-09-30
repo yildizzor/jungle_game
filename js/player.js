@@ -26,10 +26,8 @@ class Player {
     this.currentState = null;
 
     // Collision detection adjustments because bicycle rider image is not exact rectangle
-    this.forwardOffset = 0;
-    this.backwardOffset = 0;
-    this.upOffset = 0;
-    this.downOffset = 0;
+    this.xPos = 0;
+    this.yPos = 0;
   }
 
   update(input, deltaTime) {
@@ -99,12 +97,11 @@ class Player {
       this.adjustOffsets(obs);
 
       const playerY = this.y + this.yOffset;
-      const yPosDelta = this.upOffset - this.downOffset;
 
-      const playerForwardXPos = this.x + this.width - this.forwardOffset;
-      const playerBackwardXPos = this.x + this.backwardOffset;
-      const playerUpYPos = playerY + this.height - yPosDelta;
-      const playerDownYPos = playerY + yPosDelta;
+      const playerForwardXPos = this.x + this.width - this.xPos;
+      const playerBackwardXPos = this.x + this.xPos;
+      const playerUpYPos = playerY + this.height - this.yPos;
+      const playerDownYPos = playerY + this.yPos;
 
       if (
         obs.x < playerForwardXPos &&
@@ -139,10 +136,8 @@ class Player {
 
   adjustOffsets(obs) {
     // The following properties is used to adjust collision detection
-    this.forwardOffset = 0;
-    this.backwardOffset = 0;
-    this.upOffset = 0;
-    this.downOffset = 0;
+    this.xPos = 0;
+    this.yPos = 0;
 
     // up level of x and y position offsets
     const xUpForwardOffset = 75;
@@ -163,30 +158,30 @@ class Player {
     if (yUpwardPosResult < yUpOffset) {
       // Calculate upper position offset adjustments
       if (xForwardPosResult < xUpForwardOffset) {
-        this.forwardOffset = xUpForwardOffset;
+        this.xPos = xUpForwardOffset;
       } else if (xBackwardPosResult < xUpBackwardOffset) {
-        this.backwardOffset = xUpBackwardOffset;
+        this.xPos = xUpBackwardOffset;
       }
 
       if (
-        (this.forwardOffset > 0 || this.backwardOffset > 0) &&
+        (this.xPos > 0) &&
         yUpOffset > yUpwardPosResult
       ) {
-        this.upOffset = yUpOffset;
+        this.yPos = yUpOffset;
       }
     } else if (yDownwardPosResult < yDownOffset) {
       // Calculate lower position offset adjustments
       if (xForwardPosResult < xDownForwardOffset) {
-        this.forwardOffset = xDownForwardOffset;
+        this.xPos = xDownForwardOffset;
       } else if (xBackwardPosResult < xDownBackwardOffset) {
-        this.backwardOffset = xDownBackwardOffset;
+        this.xPos = xDownBackwardOffset;
       }
 
       if (
-        (this.forwardOffset > 0 || this.backwardOffset > 0) &&
+        (this.xPos > 0) &&
         yDownOffset > yDownwardPosResult
       ) {
-        this.downOffset = yDownOffset;
+        this.yPos = yDownOffset;
       }
     }
   }
