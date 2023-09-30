@@ -24,6 +24,12 @@ class Player {
     ];
 
     this.currentState = null;
+
+    // Collision detection adjustments because bicycle rider image is not exact rectangle
+    this.forwardOffset = 0;
+    this.backwardOffset = 0;
+    this.upOffset = 0;
+    this.downOffset = 0;
   }
 
   update(input, deltaTime) {
@@ -88,15 +94,25 @@ class Player {
   }
 
   checkCollision() {
-    const xOffset = 30;
     // colision detected
     this.game.obstacles.forEach((obs) => {
+      this.adjustOffsets(obs);
+
+      const playerY = this.y + this.yOffset;
+      const yPosDelta = this.upOffset - this.downOffset;
+
+      const playerForwardXPos = this.x + this.width - this.forwardOffset;
+      const playerBackwardXPos = this.x + this.backwardOffset;
+      const playerUpYPos = playerY + this.height - yPosDelta;
+      const playerDownYPos = playerY + yPosDelta;
+
       if (
-        obs.x < this.x + this.width - obs.xForwardOffset &&
-        obs.x + obs.width > this.x + obs.xBackwardOffset &&
-        obs.y < this.y + this.yOffset + this.height - obs.yUpOffset &&
-        obs.y + obs.height > this.y + this.yOffset + obs.yUpOffset
+        obs.x < playerForwardXPos &&
+        obs.x + obs.width > playerBackwardXPos &&
+        obs.y < playerUpYPos &&
+        obs.y + obs.height > playerDownYPos
       ) {
+        // Collision detected
         if (!obs.markedForDeletion) {
           obs.play();
         }
@@ -119,6 +135,60 @@ class Player {
         }
       }
     });
+  }
+
+  adjustOffsets(obs) {
+    // The following properties is used to adjust collision detection
+    this.forwardOffset = 0;
+    this.backwardOffset = 0;
+    this.upOffset = 0;
+    this.downOffset = 0;
+
+    // up level of x and y position offsets
+    const xUpForwardOffset = 75;
+    const xUpBackwardOffset = 100;
+    const yUpOffset = 90;
+
+    // down level x and y position offsets
+    const xDownForwardOffset = 20;
+    const xDownBackwardOffset = 35;
+    const yDownOffset = 30;
+
+    // Check relative position difference between player and obstacle
+    const xForwardPosResult = this.x + this.width - obs.x;
+    const xBackwardPosResult = obs.x + obs.width - this.x;
+    const yUpwardPosResult = obs.y + obs.height - this.y;
+    const yDownwardPosResult = this.y + this.height - (obs.y + obs.height);
+
+    if (yUpwardPosResult < yUpOffset) {
+      // Calculate upper position offset adjustments
+      if (xForwardPosResult < xUpForwardOffset) {
+        this.forwardOffset = xUpForwardOffset;
+      } else if (xBackwardPosResult < xUpBackwardOffset) {
+        this.backwardOffset = xUpBackwardOffset;
+      }
+
+      if (
+        (this.forwardOffset > 0 || this.backwardOffset > 0) &&
+        yUpOffset > yUpwardPosResult
+      ) {
+        this.upOffset = yUpOffset;
+      }
+    } else if (yDownwardPosResult < yDownOffset) {
+      // Calculate lower position offset adjustments
+      if (xForwardPosResult < xDownForwardOffset) {
+        this.forwardOffset = xDownForwardOffset;
+      } else if (xBackwardPosResult < xDownBackwardOffset) {
+        this.backwardOffset = xDownBackwardOffset;
+      }
+
+      if (
+        (this.forwardOffset > 0 || this.backwardOffset > 0) &&
+        yDownOffset > yDownwardPosResult
+      ) {
+        this.downOffset = yDownOffset;
+      }
+    }
   }
 
   isBendingState() {

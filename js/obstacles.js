@@ -1,6 +1,6 @@
 class Component {
   constructor(game) {
-    this.game = game
+    this.game = game;
     this.gainHealth = false;
     this.needsSplashAnimation = false;
     this.points = 20;
@@ -9,9 +9,6 @@ class Component {
     this.frameTimer = 0;
     this.markedForDeletion = false;
     this.audio;
-    this.xForwardOffset = 0;
-    this.xBackwardOffset = 0;
-    this.yUpOffset = 0;
   }
 
   frameInterval() {
@@ -90,8 +87,6 @@ class ShitObstacle extends Component {
     this.height = 60;
     this.x = this.game.width;
     this.y = 0;
-    this.xForwardOffset = 30;
-    this.xBackwardOffset = 40;
     this.maxY = this.game.height - this.height - this.game.groundMargin;
     this.image = document.getElementById("shit");
     this.speedX = 0;
@@ -114,6 +109,7 @@ class Splash extends Component {
   }
 
   update(deltaTime) {
+    // No need to call parent's update method for Splash animation
     if (!this.game.isPaused()) this.markedForDeletion = true;
   }
 }

@@ -4,7 +4,7 @@ class Game {
     this.height = height;
     this.groundMargin = 120;
     this.speed = 6;
-    this.maxSpeed = 6; // => to preserve game speed after collision. ??????????????
+    this.maxSpeed = 6; // => to preserve game speed after collision.
     this.gravity = 1;
     this.background = new Background(this);
     this.player = new Player(this);
