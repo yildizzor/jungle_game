@@ -11,8 +11,8 @@ class State {
     this.state = state;
     this.game = game;
     this.audio;
-    this.stateStartTime = null;
-    this.stateElapsedTime;
+    this.stateStartTime = 0;
+    this.stateElapsedTime = 0;
   }
 
   cleanUp() {
@@ -30,13 +30,13 @@ class State {
   }
 
   elapsedTimePassed(duration) {
-    if (this.stateStartTime === null) {
+    if (this.stateStartTime === 0) {
       this.stateStartTime = this.game.currentTime;
     } else {
       this.stateElapsedTime = this.game.currentTime - this.stateStartTime;
 
       if (this.stateElapsedTime > duration) {
-        this.stateStartTime = null;
+        this.stateStartTime = 0;
         return true;
       }
     }
@@ -84,6 +84,23 @@ class Jumping extends State {
   }
 }
 
+class Falling extends State {
+  constructor(game) {
+    super("FALLING", game);
+  }
+
+  enter() {
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 0;
+  }
+
+  handleInput(input) {
+    if (this.game.player.onGround()) {
+      this.game.player.setState(states.RUNNING, 1);
+    }
+  }
+}
+
 class Bending extends State {
   constructor(game) {
     super("BENDING", game);
@@ -117,28 +134,9 @@ class Bending extends State {
   }
 }
 
-class Falling extends State {
-  constructor(game) {
-    super("FALLING", game);
-  }
-
-  enter() {
-    this.game.player.frameX = 0;
-    this.game.player.maxFrame = 0;
-  }
-
-  handleInput(input) {
-    if (this.game.player.onGround()) {
-      this.game.player.setState(states.RUNNING, 1);
-    }
-  }
-}
-
 class Hitting extends State {
   constructor(game) {
     super("HITTING", game);
-    this.stateStartTime = null;
-    this.stateElapsedTime = null;
   }
 
   enter() {
@@ -153,9 +151,7 @@ class Hitting extends State {
 
   handleInput(input) {
     if (this.elapsedTimePassed(2000)) {
-      this.stateStartTime = null;
       this.game.player.setState(states.RUNNING, 1);
-      this.currentTime = null;
     }
   }
 }
