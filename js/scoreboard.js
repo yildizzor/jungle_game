@@ -7,9 +7,9 @@ class ScoreBoard {
   }
 
   draw(context) {
-    // Save canvas context because the context settings, like shadow effect and others,
-    // changed in this method only applied the drawings done in this method
-    // If this is not used, other drawings, like player, obstacles, will have shadows...
+    //  Save canvas context because the context settings, like shadow effect and others,
+    //  changed in this method only applied the drawings done in this method
+    //  If this is not used, other drawings, like player, obstacles, will have shadows... 
     context.save();
 
     context.font = `${this.fontSize}px ${this.fontFamily}`;
@@ -23,7 +23,7 @@ class ScoreBoard {
     context.fillText(`Time: ${this.getTime()}`, 20, 80);
     let offset = 0;
     for (let i = 0; i < this.game.lives; i++) {
-      context.drawImage(this.livesIcon, 0, 0, 35, 35, 20 + offset, 95, 35, 35);
+      context.drawImage(this.livesIcon, 0, 0, 35, 35, (20 + offset), 95, 35, 35);
       offset += 35;
     }
 

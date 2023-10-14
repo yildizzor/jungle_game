@@ -149,3 +149,22 @@ class Banana extends Component {
     this.points = 10;
   }
 }
+
+class Bird extends Component {
+  constructor(game) {
+    super(game);
+    this.width = 106;
+    this.height = 117;
+    this.x = this.game.width;
+    this.y = this.randomNumber(70, 130);
+    this.image = document.getElementById("bird");
+    this.audio = document.getElementById("bird-sound");
+    this.speedX = 4;
+    this.speedY = 0;
+    this.fps = 50;
+    this.maxFrame = 25;
+    this.gainHealth = true;
+    this.play();
+    // this.points = 10;
+  }
+}

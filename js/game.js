@@ -22,7 +22,7 @@ class Game {
     this.deltaTime = 0; // deltatime in between each animation frame.
     this.gameDuration = 122 * 1000; // 2 minutes(The game start 2 seconds late. This is an issue. Workaround!)
 
-    this.player.currentState = this.player.states[0];
+    this.player.currentState = this.player.states[0]; 
     this.player.currentState.enter();
   }
 
@@ -65,6 +65,7 @@ class Game {
 
     if (Math.random() > 0.8) {
       this.obstacles.push(new ShitObstacle(this));
+      this.obstacles.push(new Bird(this));
     } else if (Math.random() > 0.6) {
       this.obstacles.push(new MonkeyObstacle(this));
     }

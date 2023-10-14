@@ -82,7 +82,8 @@
 #fietser-icon,
 #apple-warm,
 #banana,
-#monkey {
+#monkey,
+#bird {
   display: none;
 }
 
@@ -90,6 +91,7 @@
 #fruit-sound,
 #jumping-sound,
 #monkey-sound,
+#bird-sound,
 #background-sound,
 #game-over-sound,
 #game-win-sound {

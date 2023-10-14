@@ -163,10 +163,7 @@ class Player {
         this.xPos = xUpBackwardOffset;
       }
 
-      if (
-        (this.xPos > 0) &&
-        yUpOffset > yUpwardPosResult
-      ) {
+      if (this.xPos > 0 && yUpOffset > yUpwardPosResult) {
         this.yPos = yUpOffset;
       }
     } else if (yDownwardPosResult < yDownOffset) {
@@ -177,10 +174,7 @@ class Player {
         this.xPos = xDownBackwardOffset;
       }
 
-      if (
-        (this.xPos > 0) &&
-        yDownOffset > yDownwardPosResult
-      ) {
+      if (this.xPos > 0 && yDownOffset > yDownwardPosResult) {
         this.yPos = yDownOffset;
       }
     }
